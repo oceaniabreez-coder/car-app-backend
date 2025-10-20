@@ -27,3 +27,5 @@ app.listen(PORT, (err?: Error) => {
   }
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
+export default app; 
