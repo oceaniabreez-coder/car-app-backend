@@ -1,5 +1,6 @@
 import express,  { Request, Response } from "express";
 import cors from "cors";
+import carsRouter from "./modules/car.router";
 
 const app = express();
 app.use(cors({ origin: true }));
@@ -14,6 +15,8 @@ app.get("/", (_req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+app.use("/api/cars", carsRouter);
 
 // Start server
 const PORT = process.env.PORT || 8080;
