@@ -1,0 +1,5 @@
+node_modules/
+dist/
+src/config/firestore-key.json
+.DS_Store
+src/.DS_Store
