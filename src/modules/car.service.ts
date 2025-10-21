@@ -1,26 +1,32 @@
 import { db } from "../config/firebase";
-import { Car, CarFilter } from "./car.model";
+import { Car, CarFilter,CAR_RANGES, EQ_KEYS } from "./car.model";
 import {COLLECTIONS} from "../config/collection"
 
 
 //search car service
 export async function getCars(filter: CarFilter = {}, limit:number) {
-
     try {
     let query: FirebaseFirestore.Query = db.collection(COLLECTIONS.carList).limit(Math.min(limit, 200));
 
-     for (const [key, value] of Object.entries(filter)) {
-      if (value === undefined || value === null) continue;
-
-      if (typeof value === "string") {
-        const trimmed = value.trim();
-        if (trimmed !== "") {
-          query = query.where(key, "==", trimmed);
-        }
+    for (const k of EQ_KEYS) {
+      const v = filter[k as string];
+      if (v === undefined || v === null) continue;
+      if (typeof v === 'string') {
+        const t = v.trim();
+        if (t === '') continue;
+        query = query.where(k as string, '==', t);
       } else {
-        // number, boolean, etc. → use as is
-        query = query.where(key, "==", value);
+        query = query.where(k as string, '==', v);
       }
+    }
+
+     for (const r of CAR_RANGES) {
+      const minVal = filter[r.min];
+      console.log(r.min,minVal)
+      const maxVal = filter[r.max];
+      console.log(r.max,maxVal)
+      if (minVal !== undefined) query = query.where(r.field, '>=', minVal);
+      if (maxVal !== undefined) query = query.where(r.field, '<=', maxVal);
     }
 
 

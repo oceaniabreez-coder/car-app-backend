@@ -11,15 +11,20 @@ router.post("/search", async (req: Request, res: Response) => {
 
     // Type-safe filter (only accepted keys)
     const carFilter: CarFilter = {
-      acceleration: filter?.acceleration,
+      accMin: filter?.accMin,
+      accMax: filter?.accMax,
       cylinders: filter?.cylinders,
-      displacement: filter?.displacement,
-      horsepower: filter?.horsepower,
+      dipMax: filter?.dipMax,
+      dipMin:filter?.dipMin,
+      hpMax: filter?.hpMax,
+      hpMin: filter?.hpMin,
       model_year: filter?.model_year,
-      mpg: filter?.mpg,
+      mpgMin: filter?.mpgMin,
+      mpgMax:filter?.mpgMax,
       name: filter?.name,
       origin: filter?.origin,
-      weight: filter?.weight,
+      weightMin: filter?.weightMin,
+      weightMax:filter?.weightMax
     };
 
     const cars = await getCars(carFilter, limit);
