@@ -1,23 +1,23 @@
 export interface Car {
   name: string;
-  mpg: string;
-  cylinders: string;
-  displacement: string;
-  horsepower: string;
-  weight: string;
-  acceleration: string;
-  model_year: string;
+  mpg: number;
+  cylinders: number;
+  displacement: number;
+  horsepower: number;
+  weight: number;
+  acceleration: number;
+  model_year: number;
   origin: string;
 }
 
 export interface CarFilter {
-  acceleration?: string;
-  cylinders?: string;
-  displacement?: string;
-  horsepower?: string;
-  model_year?: string;
-  mpg?: string;
+  acceleration?: number;
+  cylinders?: number;
+  displacement?: number;
+  horsepower?: number;
+  model_year?: number;
+  mpg?: number;
   name?: string;
   origin?: string;
-  weight?: string;
+  weight?: number;
 }

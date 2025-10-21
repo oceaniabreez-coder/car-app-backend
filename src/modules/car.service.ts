@@ -9,13 +9,21 @@ export async function getCars(filter: CarFilter = {}, limit:number) {
     try {
     let query: FirebaseFirestore.Query = db.collection(COLLECTIONS.carList).limit(Math.min(limit, 200));
 
-    // only apply filters that have values
-    for (const [key, value] of Object.entries(filter)) {
-      if (value && value.trim() !== "") {
+     for (const [key, value] of Object.entries(filter)) {
+      if (value === undefined || value === null) continue;
+
+      if (typeof value === "string") {
+        const trimmed = value.trim();
+        if (trimmed !== "") {
+          query = query.where(key, "==", trimmed);
+        }
+      } else {
+        // number, boolean, etc. → use as is
         query = query.where(key, "==", value);
       }
     }
-    console.log(query)
+
+
     const queryResult = await query.get();
     const cars = queryResult.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     return cars;

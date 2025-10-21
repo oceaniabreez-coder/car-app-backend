@@ -1,3 +1,3 @@
 export const COLLECTIONS = {
-  carList: "carData",
+  carList: "carData2",
 };
