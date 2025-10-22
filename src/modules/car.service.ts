@@ -10,7 +10,7 @@ export async function getCars(filter: CarFilter = {}, limit:number) {
 
     for (const k of EQ_KEYS) {
       const v = filter[k as string];
-      if (v === undefined || v === null) continue;
+      if (v === undefined || v === null ||v ===  "" || v === '') continue;
       if (typeof v === 'string') {
         console.log(k,v)
         const t = v.trim();
@@ -25,7 +25,7 @@ export async function getCars(filter: CarFilter = {}, limit:number) {
      for (const r of CAR_RANGES) {
       const minVal = filter[r.min];
       const maxVal = filter[r.max];
-      if((minVal === undefined || minVal === null) && (maxVal === undefined || maxVal === null)) continue;
+      if((minVal === undefined || minVal === null ||minVal === "" ||minVal==='' ) && (maxVal === undefined || maxVal === null||maxVal===""||maxVal==='')) continue;
       console.log(r.min,minVal);
       console.log(r.max,maxVal);
       if (minVal !== undefined) query = query.where(r.field, '>=', minVal);
