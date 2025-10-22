@@ -48,8 +48,7 @@ export interface CarFilter {
 
 
 export const EQ_KEYS:string[] = [
-  'name', 
-  'make', 
+  'name',  
   'origin', 
   'model_year', 
   'cylinders'
@@ -64,7 +63,7 @@ export interface RangeConfig {
 
 
 export const CAR_RANGES: RangeConfig[] = [
-  { min: 'hpMin',     max: 'hpMax',     field: 'hp' },
+  { min: 'hpMin',     max: 'hpMax',     field: 'horsepower' },
   { min: 'mpgMin',    max: 'mpgMax',    field: 'mpg' },
   { min: 'weightMin', max: 'weightMax', field: 'weight' },
   { min: 'accMin',    max: 'accMax',    field: 'acceleration' },
