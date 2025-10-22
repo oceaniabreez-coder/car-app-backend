@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { addCar, deleteCar, getCars} from "./car.service";
+import { addCar, deleteCar, getCars, updateCar} from "./car.service";
 import { Car, CarFilter } from "./car.model";
 
 const router = Router();
@@ -35,7 +35,7 @@ router.post("/search", async (req: Request, res: Response) => {
   }
 });
 
-//add new ca
+//add new car
 router.post("/", async (req: Request, res: Response) => {
   try {
     const car: Car = req.body;
@@ -50,6 +50,25 @@ router.post("/", async (req: Request, res: Response) => {
   } catch (error: any) {
     console.error("POST /api/cars error:", error.message);
     res.status(500).json({ error: "Failed to add car" });
+  }
+});
+
+
+//update car
+router.put("/", async (req: Request, res: Response) => {
+  try {
+    const car: Car = req.body;
+
+    // simple validation
+    if (!car.name) {
+      return res.status(400).json({ error: "Car name is required" });
+    }
+
+    const saved = await updateCar(car);
+    res.status(201).json({ message: "Car updated successfully", car: saved });
+  } catch (error: any) {
+    console.error("POST /api/cars error:", error.message);
+    res.status(500).json({ error: "Failed to update car" });
   }
 });
 

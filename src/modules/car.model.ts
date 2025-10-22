@@ -1,4 +1,5 @@
 export interface Car {
+  id :string
   name: string;
   mpg: number;
   cylinders: number;
@@ -9,6 +10,21 @@ export interface Car {
   model_year: number;
   origin: string;
 }
+
+
+export interface UpdateCar {
+  id : string;
+  name: string;
+  mpg: number;
+  cylinders: number;
+  displacement: number;
+  horsepower: number;
+  weight: number;
+  acceleration: number;
+  model_year: number;
+  origin: string;
+}
+
 
 export interface CarFilter {
 [key: string]: any;    

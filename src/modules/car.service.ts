@@ -1,5 +1,5 @@
 import { db } from "../config/firebase";
-import { Car, CarFilter,CAR_RANGES, EQ_KEYS } from "./car.model";
+import { Car, CarFilter,CAR_RANGES, EQ_KEYS, UpdateCar } from "./car.model";
 import {COLLECTIONS} from "../config/collection"
 
 
@@ -22,9 +22,10 @@ export async function getCars(filter: CarFilter = {}, limit:number) {
 
      for (const r of CAR_RANGES) {
       const minVal = filter[r.min];
-      console.log(r.min,minVal)
       const maxVal = filter[r.max];
-      console.log(r.max,maxVal)
+      if((minVal === undefined || minVal === null) && (maxVal === undefined || maxVal === null)) continue;
+      console.log(r.min,minVal);
+      console.log(r.max,maxVal);
       if (minVal !== undefined) query = query.where(r.field, '>=', minVal);
       if (maxVal !== undefined) query = query.where(r.field, '<=', maxVal);
     }
@@ -41,19 +42,46 @@ export async function getCars(filter: CarFilter = {}, limit:number) {
 }
 
 
-//add car service.csc
+//add car service
 export async function addCar(car: Car) {
   try {
     const collection = db.collection(COLLECTIONS.carList);
   
       const docRef = await collection.add(car);
-      return { id: docRef.id, ...car };
+      return { ...car };
     
   } catch (error: any) {
     console.error("Error adding car:", error.message);
     throw new Error("Failed to add car");
   }
 }
+
+//update car service
+export async function updateCar(car:Car) {
+
+  if (!car || !car.id) {
+    throw new Error("Missing car id for update");
+  }
+   const { id, ...data } = car;
+  try {
+    const docRef = db.collection(COLLECTIONS.carList).doc(id);
+
+    const snap = await docRef.get();
+    if (!snap.exists) {
+      throw new Error("Car not found");
+    }
+    await docRef.update(data);
+
+    const updated = await docRef.get();
+    return {...updated.data() };
+
+    
+  } catch (error: any) {
+    console.error("Error updating car:", error.message);
+    throw new Error("Failed to add car");
+  }
+}
+
 
 //delete car service
 export async function deleteCar(id: string) {
