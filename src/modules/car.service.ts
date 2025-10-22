@@ -12,11 +12,13 @@ export async function getCars(filter: CarFilter = {}, limit:number) {
       const v = filter[k as string];
       if (v === undefined || v === null) continue;
       if (typeof v === 'string') {
+        console.log(k,v)
         const t = v.trim();
         if (t === '') continue;
         query = query.where(k as string, '==', t);
       } else {
-        query = query.where(k as string, '==', v);
+        console.log(k,v)
+        query = query.where(k, '==', v);
       }
     }
 

@@ -29,7 +29,7 @@ export interface UpdateCar {
 export interface CarFilter {
 [key: string]: any;    
   name?: string;
-  year?: number;
+  model_year?: number;
   cylinders?: number;
   origin?: string;
   hpMin?: number;
@@ -51,7 +51,7 @@ export const EQ_KEYS:string[] = [
   'name', 
   'make', 
   'origin', 
-  'year', 
+  'model_year', 
   'cylinders'
   ];
 
