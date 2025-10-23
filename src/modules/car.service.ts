@@ -13,7 +13,7 @@ export async function getCars(filter: CarFilter = {}, limit:number) {
       if (v === undefined || v === null ||v ===  "" || v === '') continue;
       if (typeof v === 'string') {
         console.log(k,v)
-        const t = v.trim().toLocaleLowerCase();
+        const t = v.trim().toLowerCase();
         if (t === '') continue;
         query = query.where(k as string, '==', t);
       } else {
