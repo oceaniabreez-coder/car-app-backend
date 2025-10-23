@@ -13,7 +13,7 @@ export async function getCars(filter: CarFilter = {}, limit:number) {
       if (v === undefined || v === null ||v ===  "" || v === '') continue;
       if (typeof v === 'string') {
         console.log(k,v)
-        const t = v.trim().toLowerCase();
+        const t = v.trim();
         if (t === '') continue;
         query = query.where(k as string, '==', t);
       } else {
@@ -47,9 +47,11 @@ export async function getCars(filter: CarFilter = {}, limit:number) {
 //add car service
 export async function addCar(car: Car) {
   try {
+    console.log(car)
     const collection = db.collection(COLLECTIONS.carList);
   
       const docRef = await collection.add(car);
+      console.log(docRef)
       return { ...car };
     
   } catch (error: any) {
