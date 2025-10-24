@@ -15,7 +15,8 @@ export async function getCars(filter: CarFilter = {}, limit:number) {
         console.log(k,v)
         const t = v.trim();
         if (t === '') continue;
-        query = query.where(k as string, '==', t);
+        query = query.where(k as string, '>=', t)
+        .where(k as string, '<=', t+"\uf8ff");
       } else {
         console.log(k,v)
         query = query.where(k, '==', v);
